@@ -16,10 +16,12 @@ export default welcome;
 const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 30,
-    fontStyle: 'italic'
+    fontStyle: 'italic',
+    fontFamily: 'Avenir'
   },
   futbookeeText: {
     fontSize: 60,
-    fontStyle: 'italic'
+    fontStyle: 'italic',
+    fontFamily: 'Avenir'
   }
 });

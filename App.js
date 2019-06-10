@@ -4,6 +4,7 @@ import Logo from 'futbookee/components/logo';
 import InputField from 'futbookee/components/InputField';
 import Button from 'futbookee/components/Button';
 import Welcome from 'futbookee/components/welcome';
+import Grass from 'futbookee/components/grass';
 
 export default class App extends Component {
   render() {
@@ -32,6 +33,7 @@ export default class App extends Component {
         >
           Don't have an account? Sign up.
         </Text>
+        <Grass />
       </View>
     );
   }

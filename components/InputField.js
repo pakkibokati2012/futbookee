@@ -43,13 +43,15 @@ const styles = StyleSheet.create({
   infoText: {
     color: 'black',
     fontStyle: 'italic',
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: 'Avenir'
   },
   textInputContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderColor: 'gray',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
+    fontFamily: 'Avenir'
   },
   inputTextStyle: {
     height: 45,

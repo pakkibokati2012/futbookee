@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 class InputField extends Component {
   constructor(props) {
@@ -9,13 +10,18 @@ class InputField extends Component {
   render() {
     return (
       <View>
-        <Text style={styles.infoText}>email</Text>
-        <TextInput
-          placeholder='dannybokati@gmail.com'
-          style={styles.inputTextStyle}
-          onChangeText={text => this.setState({ text })}
-          value={this.state.text}
-        />
+        <Text style={styles.infoText}>{this.props.infoText}</Text>
+        <View style={styles.textInputContainer}>
+          <TextInput
+            placeholder={this.props.placeholderText}
+            style={styles.inputTextStyle}
+            onChangeText={text => this.setState({ text })}
+            value={this.state.text}
+          />
+          {this.props.hideTextIcon && (
+            <Icon name={'ios-eye-off'} size={35} style={styles.iconStyle} />
+          )}
+        </View>
       </View>
     );
   }
@@ -29,11 +35,20 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: 20
   },
+  textInputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderColor: 'gray',
+    borderBottomWidth: 1
+  },
   inputTextStyle: {
     height: 45,
-    borderColor: 'gray',
-    borderBottomWidth: 1,
     fontStyle: 'italic',
-    fontSize: 20
+    fontSize: 20,
+    alignSelf: 'stretch'
+  },
+  iconStyle: {
+    color: 'black',
+    fontSize: 35
   }
 });

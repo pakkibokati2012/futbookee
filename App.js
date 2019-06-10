@@ -8,7 +8,15 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <Logo />
-        <InputField />
+        <InputField
+          infoText={'email'}
+          placeholderText={'dannybokati@gmail.com'}
+        />
+        <InputField
+          infoText={'password'}
+          placeholderText={'**********'}
+          hideTextIcon={true}
+        />
       </View>
     );
   }
@@ -17,6 +25,8 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF'
+    backgroundColor: '#F5FCFF',
+    marginLeft: 15,
+    marginRight: 15
   }
 });

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import Logo from 'futbookee/components/logo';
+import InputField from 'futbookee/components/InputField';
 
 export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Logo />
+        <InputField />
       </View>
     );
   }
@@ -15,8 +17,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF'
   }
 });

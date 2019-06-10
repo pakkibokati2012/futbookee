@@ -22,6 +22,16 @@ class InputField extends Component {
             <Icon name={'ios-eye-off'} size={35} style={styles.iconStyle} />
           )}
         </View>
+        {this.props.forgotPasswordOption && (
+          <Text
+            style={[
+              styles.inputTextStyle,
+              { alignSelf: 'flex-end', marginTop: 10 }
+            ]}
+          >
+            forgot your password?
+          </Text>
+        )}
       </View>
     );
   }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">futbookee</string>
+    <string name="facebook_app_id">2955949691297042</string>
+    <string name="fb_login_protocol_scheme">fb2955949691297042</string>
 </resources>

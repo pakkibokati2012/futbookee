@@ -5,6 +5,7 @@ import InputField from 'futbookee/components/InputField';
 import Button from 'futbookee/components/Button';
 import Welcome from 'futbookee/components/welcome';
 import Grass from 'futbookee/components/grass';
+import { LoginButton, AccessToken } from 'react-native-fbsdk';
 
 export default class App extends Component {
   render() {
@@ -33,6 +34,20 @@ export default class App extends Component {
         >
           Don't have an account? Sign up.
         </Text>
+        <LoginButton
+          onLoginFinished={(error, result) => {
+            if (error) {
+              console.log('login has error: ' + result.error);
+            } else if (result.isCancelled) {
+              console.log('login is cancelled.');
+            } else {
+              AccessToken.getCurrentAccessToken().then(data => {
+                console.log(data.accessToken.toString());
+              });
+            }
+          }}
+          onLogoutFinished={() => console.log('logout.')}
+        />
         <Grass />
       </View>
     );

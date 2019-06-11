@@ -6,7 +6,7 @@ const grass = () => {
     <View style={styles.container}>
       <Image
         style={styles.grass}
-        source={require('futbookee/assets/grass1.png')}
+        source={require('futbookee/assets/grass.png')}
       />
     </View>
   );
@@ -19,6 +19,8 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width
   },
   container: {
-    marginLeft: -15
+    marginLeft: -15,
+    position: 'absolute',
+    bottom: 0
   }
 });

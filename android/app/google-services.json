@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "770061676970",
+    "firebase_url": "https://futbookee.firebaseio.com",
+    "project_id": "futbookee",
+    "storage_bucket": "futbookee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:770061676970:android:7b5426fe9c0a82e9",
+        "android_client_info": {
+          "package_name": "com.futbookee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "770061676970-rbilblq8f5f7dsns3gbv96ljj6rtlo8l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuTJMcFE19Pd87klUEHEXvNHwyUCNTcLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "770061676970-rbilblq8f5f7dsns3gbv96ljj6rtlo8l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

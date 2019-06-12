@@ -1,64 +1,228 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import Logo from 'futbookee/components/logo';
-import InputField from 'futbookee/components/InputField';
-import Button from 'futbookee/components/Button';
-import Welcome from 'futbookee/components/welcome';
-import Grass from 'futbookee/components/grass';
-import { LoginButton, AccessToken } from 'react-native-fbsdk';
+// import React, { Component } from 'react';
+// import { StyleSheet, Text, View, Image } from 'react-native';
+// import Logo from 'futbookee/components/logo';
+// import InputField from 'futbookee/components/InputField';
+// import Button from 'futbookee/components/Button';
+// import Welcome from 'futbookee/components/welcome';
+// import Grass from 'futbookee/components/grass';
+// import { LoginButton, AccessToken } from 'react-native-fbsdk';
 
-export default class App extends Component {
-  render() {
+// export default class App extends Component {
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//         <Logo />
+//         <Welcome />
+//         <InputField
+//           infoText={'email'}
+//           placeholderText={'dannybokati@gmail.com'}
+//         />
+//         <InputField
+//           infoText={'password'}
+//           placeholderText={'**********'}
+//           hideTextIcon={true}
+//           forgotPasswordOption={true}
+//         />
+//         <Button />
+//         <Text
+//           style={{
+//             alignSelf: 'center',
+//             marginTop: 10,
+//             fontSize: 20,
+//             fontStyle: 'italic'
+//           }}
+//         >
+//           Don't have an account? Sign up.
+//         </Text>
+//         <LoginButton
+//           onLoginFinished={(error, result) => {
+//             if (error) {
+//               console.log('login has error: ' + result.error);
+//             } else if (result.isCancelled) {
+//               console.log('login is cancelled.');
+//             } else {
+//               AccessToken.getCurrentAccessToken().then(data => {
+//                 console.log(data.accessToken.toString());
+//               });
+//             }
+//           }}
+//           onLogoutFinished={() => console.log('logout.')}
+//         />
+//         <Grass />
+//       </View>
+//     );
+//   }
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#F5FCFF',
+//     marginLeft: 15,
+//     marginRight: 15
+//   }
+// });
+
+import React, { Component } from 'react';
+import { View, Button, Text, TextInput, Image } from 'react-native';
+
+import firebase from 'react-native-firebase';
+
+const successImageUri =
+  'https://cdn.pixabay.com/photo/2015/06/09/16/12/icon-803718_1280.png';
+
+export default class PhoneAuthTest extends Component {
+  constructor(props) {
+    super(props);
+    this.unsubscribe = null;
+    this.state = {
+      user: null,
+      message: '',
+      codeInput: '',
+      phoneNumber: '+977',
+      confirmResult: null
+    };
+  }
+
+  componentDidMount() {
+    this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ user: user.toJSON() });
+      } else {
+        // User has been signed out, reset the state
+        this.setState({
+          user: null,
+          message: '',
+          codeInput: '',
+          phoneNumber: '+977',
+          confirmResult: null
+        });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    if (this.unsubscribe) this.unsubscribe();
+  }
+
+  signIn = () => {
+    const { phoneNumber } = this.state;
+    this.setState({ message: 'Sending code ...' });
+
+    firebase
+      .auth()
+      .signInWithPhoneNumber(phoneNumber)
+      .then(confirmResult =>
+        this.setState({ confirmResult, message: 'Code has been sent!' })
+      )
+      .catch(error =>
+        this.setState({
+          message: `Sign In With Phone Number Error: ${error.message}`
+        })
+      );
+  };
+
+  confirmCode = () => {
+    const { codeInput, confirmResult } = this.state;
+
+    if (confirmResult && codeInput.length) {
+      confirmResult
+        .confirm(codeInput)
+        .then(user => {
+          this.setState({ message: 'Code Confirmed!' });
+        })
+        .catch(error =>
+          this.setState({ message: `Code Confirm Error: ${error.message}` })
+        );
+    }
+  };
+
+  signOut = () => {
+    firebase.auth().signOut();
+  };
+
+  renderPhoneNumberInput() {
+    const { phoneNumber } = this.state;
+
     return (
-      <View style={styles.container}>
-        <Logo />
-        <Welcome />
-        <InputField
-          infoText={'email'}
-          placeholderText={'dannybokati@gmail.com'}
+      <View style={{ padding: 25 }}>
+        <Text>Enter phone number:</Text>
+        <TextInput
+          autoFocus
+          style={{ height: 40, marginTop: 15, marginBottom: 15 }}
+          onChangeText={value => this.setState({ phoneNumber: value })}
+          placeholder={'Phone number ... '}
+          value={phoneNumber}
         />
-        <InputField
-          infoText={'password'}
-          placeholderText={'**********'}
-          hideTextIcon={true}
-          forgotPasswordOption={true}
+        <Button title='Sign In' color='green' onPress={this.signIn} />
+      </View>
+    );
+  }
+
+  renderMessage() {
+    const { message } = this.state;
+
+    if (!message.length) return null;
+
+    return (
+      <Text style={{ padding: 5, backgroundColor: '#000', color: '#fff' }}>
+        {message}
+      </Text>
+    );
+  }
+
+  renderVerificationCodeInput() {
+    const { codeInput } = this.state;
+
+    return (
+      <View style={{ marginTop: 25, padding: 25 }}>
+        <Text>Enter verification code below:</Text>
+        <TextInput
+          autoFocus
+          style={{ height: 40, marginTop: 15, marginBottom: 15 }}
+          onChangeText={value => this.setState({ codeInput: value })}
+          placeholder={'Code ... '}
+          value={codeInput}
         />
-        <Button />
-        <Text
-          style={{
-            alignSelf: 'center',
-            marginTop: 10,
-            fontSize: 20,
-            fontStyle: 'italic'
-          }}
-        >
-          Don't have an account? Sign up.
-        </Text>
-        <LoginButton
-          onLoginFinished={(error, result) => {
-            if (error) {
-              console.log('login has error: ' + result.error);
-            } else if (result.isCancelled) {
-              console.log('login is cancelled.');
-            } else {
-              AccessToken.getCurrentAccessToken().then(data => {
-                console.log(data.accessToken.toString());
-              });
-            }
-          }}
-          onLogoutFinished={() => console.log('logout.')}
+        <Button
+          title='Confirm Code'
+          color='#841584'
+          onPress={this.confirmCode}
         />
-        <Grass />
+      </View>
+    );
+  }
+
+  render() {
+    const { user, confirmResult } = this.state;
+    return (
+      <View style={{ flex: 1 }}>
+        {!user && !confirmResult && this.renderPhoneNumberInput()}
+
+        {this.renderMessage()}
+
+        {!user && confirmResult && this.renderVerificationCodeInput()}
+
+        {user && (
+          <View
+            style={{
+              padding: 15,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#77dd77',
+              flex: 1
+            }}
+          >
+            <Image
+              source={{ uri: successImageUri }}
+              style={{ width: 100, height: 100, marginBottom: 25 }}
+            />
+            <Text style={{ fontSize: 25 }}>Signed In!</Text>
+            <Text>{JSON.stringify(user)}</Text>
+            <Button title='Sign Out' color='red' onPress={this.signOut} />
+          </View>
+        )}
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-    marginLeft: 15,
-    marginRight: 15
-  }
-});

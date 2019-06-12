@@ -3,6 +3,8 @@ package com.futbookee;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -25,18 +27,18 @@ public class MainApplication extends Application implements ReactApplication {
   }
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
-      @Override
-      public boolean getUseDeveloperSupport() {
-          return BuildConfig.DEBUG;
-      }
+    @Override
+    public boolean getUseDeveloperSupport() {
+      return BuildConfig.DEBUG;
+    }
 
-      @Override
-      protected List<ReactPackage> getPackages() {
-          return Arrays.<ReactPackage>asList(
-                  new MainReactPackage(),
-                  new FBSDKPackage(mCallbackManager)
-          );
-      }
+    @Override
+    protected List<ReactPackage> getPackages() {
+      return Arrays.<ReactPackage>asList(new MainReactPackage(), new RNFirebasePackage(),
+          new FBSDKPackage(mCallbackManager), new RNFirebaseAuthPackage()
+
+      );
+    }
 
     @Override
     protected String getJSMainModuleName() {
